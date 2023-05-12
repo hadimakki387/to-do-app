@@ -1,11 +1,12 @@
 import "../App.css";
 
 function ListItem(props) {
+    console.log(props.checked)
   return (
     <div className="flex justify-between w-full mt-4">
       <div className="flex gap-4">
         <input type="checkbox"></input>
-        <p className={"text-xl " + props.styles}>{props.content}</p>
+        <p className={"text-xl " + props.styles }>{props.content}</p>
       </div>
       <div>
         <button>

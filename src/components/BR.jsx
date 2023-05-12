@@ -2,7 +2,7 @@ import React from 'react'
 
 function BR() {
   return (
-    <div className="h-[2px] w-[35rem] bg-neutral-300 mt-4"></div>
+    <div className="h-[2px] w-full bg-neutral-300 mt-4"></div>
   )
 }
 

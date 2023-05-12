@@ -12,16 +12,19 @@ function AppOriginal() {
       id: 1,
       title: "finish React Series",
       isComplete: false,
+      editingState: false,
     },
     {
       id: 2,
       title: "Go Grocery",
       isComplete: true,
+      editingState: false,
     },
     {
       id: 3,
       title: "Take over world",
       isComplete: true,
+      editingState: false,
     },
   ]);
   const [input, setInput] = useState("");
@@ -32,7 +35,7 @@ function AppOriginal() {
 
   let addToDo = (e) => {
     e.preventDefault();
-    if(!input){
+    if (!input) {
       return;
     }
     setTodos([
@@ -43,29 +46,80 @@ function AppOriginal() {
         isComplete: false,
       },
     ]);
-    setInput('')
+    setInput("");
   };
 
-  let removeItem = (id)=>{
-    setTodos(toDos.filter(toDo => toDo.id!==id))
-  }
+  let removeItem = (id) => {
+    setTodos([...toDos].filter((toDo) => toDo.id !== id));
+  };
 
+  let check = (id) => {
+    const newToDo = toDos.map((toDo) => {
+      if (toDo.id === id) {
+        toDo.isComplete = !toDo.isComplete;
+      }
+      return toDo;
+    });
+    setTodos(newToDo);
+  };
+
+  const isEditing = (id) => {
+    const newToDo = toDos.map((toDo) => {
+      if (toDo.id === id) {
+        toDo.editingState = !toDo.editingState;
+      }
+      return toDo;
+    });
+    setTodos(newToDo);
+  };
+
+  const updateToDo = (e, id) => {
+    const newToDo = toDos.map((toDo) => {
+      if (toDo.id === id) {
+        if (e.target.value) {
+          toDo.title = e.target.value;
+          toDo.editingState = !toDo.editingState;
+        } else {
+          toDo.editingState = !toDo.editingState;
+        }
+      }
+      return toDo;
+    });
+    setTodos(newToDo);
+  };
+  const cancelEdit = (e, id) => {
+    const newToDo = toDos.map((toDo) => {
+      if (toDo.id === id) {
+        if (e.target.value) {
+          toDo.editingState = !toDo.editingState;
+        } 
+      }
+      return toDo;
+    });
+    setTodos(newToDo);
+  };
   return (
-    <div className="bg-gray-100 h-[49vw]">
-      <div className="grid justify-start gap-4 w-1/3 relative top-32 m-auto bg-white p-8">
+    
+      <div className="grid justify-start gap-4 grid-cols-1  w-1/3 max-[1080px]:w-1/2 max-[690px]:w-full relative top-32 m-auto bg-white p-8">
         <div className="w-full">
           <h2 className="font-bold text-2xl text-left">Todo App</h2>
         </div>
 
-        <Form onChange={inputCapture} onSubmit={addToDo} inputValue={input}/>
+        <Form onChange={inputCapture} onSubmit={addToDo} inputValue={input} />
 
         {toDos.map((toDo, index) => (
           <ListItem
             content={toDo.title}
-            styles={toDo.isComplete ? "line-through" : ""}
+            styles={toDo.isComplete === true ? "line-through" : ""}
             key={toDo.id}
             id={toDo.id}
             removeItem={removeItem}
+            check={check}
+            isComplete={toDo.isComplete}
+            editingState={toDo.editingState}
+            isEditing={isEditing}
+            updateToDo={updateToDo}
+            cancelEdit = {cancelEdit}
           />
         ))}
 
@@ -93,7 +147,7 @@ function AppOriginal() {
           </div>
         </div>
       </div>
-    </div>
+
   );
 }
 

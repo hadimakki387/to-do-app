@@ -24,21 +24,48 @@ function AppOriginal() {
       isComplete: true,
     },
   ]);
+  const [input, setInput] = useState("");
+
+  let inputCapture = (e) => {
+    setInput(e.target.value);
+  };
+
+  let addToDo = (e) => {
+    e.preventDefault();
+    if(!input){
+      return;
+    }
+    setTodos([
+      ...toDos,
+      {
+        id: toDos.length + 1,
+        title: input,
+        isComplete: false,
+      },
+    ]);
+    setInput('')
+  };
+
+  let removeItem = (id)=>{
+    setTodos(toDos.filter(toDo => toDo.id!==id))
+  }
 
   return (
-    <div className="bg-gray-100 h-[100vw]">
-      <div className="grid justify-start gap-4 w-1/3 relative top-32 m-auto bg-white p-8 ">
+    <div className="bg-gray-100 h-[49vw]">
+      <div className="grid justify-start gap-4 w-1/3 relative top-32 m-auto bg-white p-8">
         <div className="w-full">
           <h2 className="font-bold text-2xl text-left">Todo App</h2>
         </div>
 
-        <Form />
+        <Form onChange={inputCapture} onSubmit={addToDo} inputValue={input}/>
 
         {toDos.map((toDo, index) => (
           <ListItem
             content={toDo.title}
             styles={toDo.isComplete ? "line-through" : ""}
             key={toDo.id}
+            id={toDo.id}
+            removeItem={removeItem}
           />
         ))}
 

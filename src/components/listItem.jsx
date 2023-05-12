@@ -1,7 +1,6 @@
 import "../App.css";
 
 function ListItem(props) {
-    console.log(props.checked)
   return (
     <div className="flex justify-between w-full mt-4">
       <div className="flex gap-4">
@@ -9,7 +8,7 @@ function ListItem(props) {
         <p className={"text-xl " + props.styles }>{props.content}</p>
       </div>
       <div>
-        <button>
+        <button onClick={() => props.removeItem(props.id)}>
           <i class="fa-solid fa-x"></i>
         </button>
       </div>

@@ -4,11 +4,13 @@ function ListItem(props) {
   return (
     <div className="flex justify-between w-full mt-4">
       <div className="flex gap-4">
+      
         <input
           type="checkbox"
           onChange={() => props.check(props.toDo.id)}
-          checked={props.isComplete ? true : false}
+          checked={props.toDo.isComplete ? true : false}
         ></input>
+
         <span onDoubleClick={() => props.isEditing(props.toDo.id)}>
           {props.toDo.editingState ? (
             <input
@@ -27,10 +29,11 @@ function ListItem(props) {
             <p className={"text-xl " + props.styles}>{props.toDo.title}</p>
           )}
         </span>
+        
       </div>
       <div>
         <button onClick={() => props.removeItem(props.toDo.id)}>
-          <i class="fa-solid fa-x"></i>
+          <i className="fa-solid fa-x"></i>
         </button>
       </div>
     </div>

@@ -40,6 +40,7 @@ function Index() {
       },
     ]);
   };
+  const [filter, setfilter] = useState("All");
 
   let removeItem = (id) => {
     setTodos([...toDos].filter((toDo) => toDo.id !== id));
@@ -90,6 +91,36 @@ function Index() {
     });
     setTodos(newToDo);
   };
+
+  let setToDosFunction = (items) => {
+    setTodos(items);
+  };
+  let clearCompleted = () => {
+    setTodos(toDos.filter((toDo) => !toDo.isComplete));
+  };
+
+  let checkAll = () => {
+    const newToDo = toDos.map((toDo) => {
+      toDo.isComplete = true;
+      return toDo;
+    });
+    setTodos(newToDo);
+  };
+
+  function todosFiltered(filter) {
+    if (filter === "All") {
+      return toDos;
+    } else if (filter === "Active") {
+      return toDos.filter((toDO) => !toDO.isComplete);
+    } else if (filter === "Completed") {
+      return toDos.filter((toDO) => toDO.isComplete);
+    }
+  }
+  
+  function setCategory(name) {
+    setfilter(name)
+  }
+
   return (
     <div className="grid justify-start gap-4 grid-cols-1  w-1/3 max-[1080px]:w-1/2 max-[690px]:w-full relative top-32 m-auto bg-white p-8">
       <div className="w-full">
@@ -98,7 +129,7 @@ function Index() {
 
       <Form addToDo={addToDo} />
 
-      {toDos.map((toDo, index) => (
+      {todosFiltered(filter).map((toDo, index) => (
         <ListItem
           styles={toDo.isComplete === true ? "line-through" : ""}
           key={toDo.id}
@@ -108,17 +139,23 @@ function Index() {
           isEditing={isEditing}
           updateToDo={updateToDo}
           cancelEdit={cancelEdit}
+          clearCompleted={clearCompleted}
+          
         />
       ))}
       {toDos.length > 0 ? (
         <>
           <BR />
 
-          <CheckAll />
+          <CheckAll
+            toDos={toDos}
+            setTodos={setToDosFunction}
+            checkAll={checkAll}
+          />
 
           <BR />
 
-          <Categiries />
+          <Categiries clearCompleted={clearCompleted} setCategory={setCategory} filter={filter}/>
         </>
       ) : (
         <NoTodos />

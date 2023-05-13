@@ -6,30 +6,30 @@ function ListItem(props) {
       <div className="flex gap-4">
         <input
           type="checkbox"
-          onChange={() => props.check(props.id)}
+          onChange={() => props.check(props.toDo.id)}
           checked={props.isComplete ? true : false}
         ></input>
-        <span onDoubleClick={() => props.isEditing(props.id)}>
-          {props.editingState ? (
+        <span onDoubleClick={() => props.isEditing(props.toDo.id)}>
+          {props.toDo.editingState ? (
             <input
-              defaultValue={props.content}
-              onBlur={(event) => props.updateToDo(event, props.id)}
+              defaultValue={props.toDo.title}
+              onBlur={(event) => props.updateToDo(event, props.toDo.id)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  props.updateToDo(event, props.id);
+                  props.updateToDo(event, props.toDo.id);
                 }else if(event.key === 'Escape'){
-                  props.cancelEdit(event, props.id);
+                  props.cancelEdit(event, props.toDo.id);
                 }
               }}
               className="border border-neutral-400 p-1 rounded-md text-xl"
             ></input>
           ) : (
-            <p className={"text-xl " + props.styles}>{props.content}</p>
+            <p className={"text-xl " + props.styles}>{props.toDo.title}</p>
           )}
         </span>
       </div>
       <div>
-        <button onClick={() => props.removeItem(props.id)}>
+        <button onClick={() => props.removeItem(props.toDo.id)}>
           <i class="fa-solid fa-x"></i>
         </button>
       </div>

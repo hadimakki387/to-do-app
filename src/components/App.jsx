@@ -1,9 +1,9 @@
-import AppOriginal from "./appOriginal";
+import Index from ".";
 
 function App() {
   return (
     <div>
-      <AppOriginal/>
+      <Index/>
     </div>
   );
 }

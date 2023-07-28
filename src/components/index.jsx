@@ -116,15 +116,58 @@ function Index() {
       return toDos.filter((toDO) => toDO.isComplete);
     }
   }
-  
+
   function setCategory(name) {
-    setfilter(name)
+    setfilter(name);
+  }
+  const [name, setName] = useState("");
+  const[editingName,setEditingName]=useState(false)
+
+  function editName(){
+    setEditingName(true)
+    console.log(editingName)
   }
 
   return (
     <div className="grid justify-start gap-4 grid-cols-1  w-1/3 max-[1080px]:w-1/2 max-[690px]:w-full relative top-32 m-auto bg-white p-8">
       <div className="w-full">
-        <h2 className="font-bold text-2xl text-left">Todo App</h2>
+        {!name ? (
+          <div className="mb-4">
+            <p className="font-bold text-2xl text-left mb-2">
+              What is you name?
+            </p>
+            <input
+              type="text"
+              className="border border-neutral-400 p-1 rounded-md text-xl"
+              placeholder="what is your name"
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  setName(event.target.value);
+                }
+              }}
+            />
+          </div>
+        ) : (
+          editingName===true?(
+            <input
+              type="text"
+              className="border border-neutral-400 p-1 rounded-md text-xl"
+              placeholder="what is your name"
+              defaultValue={name}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  setName(event.target.value);
+                  setEditingName(false)
+                }
+              }}
+            />
+          ):(
+            <p onDoubleClick={editName} className="font-bold text-2xl text-left mb-2">{name}</p>
+          )
+          
+        )}
+
+        <h2  className="font-bold text-2xl text-left">Todo App</h2>
       </div>
 
       <Form addToDo={addToDo} />
@@ -140,7 +183,6 @@ function Index() {
           updateToDo={updateToDo}
           cancelEdit={cancelEdit}
           clearCompleted={clearCompleted}
-          
         />
       ))}
       {toDos.length > 0 ? (
@@ -155,7 +197,11 @@ function Index() {
 
           <BR />
 
-          <Categiries clearCompleted={clearCompleted} setCategory={setCategory} filter={filter}/>
+          <Categiries
+            clearCompleted={clearCompleted}
+            setCategory={setCategory}
+            filter={filter}
+          />
         </>
       ) : (
         <NoTodos />

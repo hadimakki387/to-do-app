@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Button from "./button";
 
 function CheckAll(props) {
-    let toDos = props.toDos;
+  let toDos = props.toDos;
   
+  let remainingTodos = () => {
+    console.log('calculating')
+    return toDos.filter((toDo) => !toDo.isComplete).length;
+  };
+  const remaining = useMemo(remainingTodos,[toDos])
 
-  let remainingTodos = () =>{
-    return toDos.filter(toDo =>!toDo.isComplete).length
-  }
-  
 
   return (
     <div className="flex justify-between w-full mt-4 ">
@@ -17,7 +18,7 @@ function CheckAll(props) {
         styles="border border-gray-400 p-1"
         click={props.checkAll}
       />
-      <span>{remainingTodos()} items remaining</span>
+      <span>{remaining} items remaining</span>
     </div>
   );
 }

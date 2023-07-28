@@ -2,16 +2,18 @@ import React from "react";
 import Button from "./button";
 
 function Categiries(props) {
+  console.log(props.filter === 'All');
+  const active = 'border border-black ';
   return (
     <div className="flex justify-between mt-4">
       <div className="space-x-2">
-        <button className={"rounded-md "+ props.filter==='All'?' border border-gray-400 p-1':''} onClick={()=>props.setCategory('All')}>
+        <button className={'rounded-md p-1 ' + (props.filter === 'All' ? active : '')} onClick={() => props.setCategory('All')}>
           All
         </button>
-        <button className={"rounded-md "+ props.filter==='Active'?' border border-gray-400 p-1':''} onClick={()=>props.setCategory('Active')}>
+        <button className={'rounded-md p-1 ' + (props.filter === 'Active' ? active : '')} onClick={() => props.setCategory('Active')}>
           Active
         </button>
-        <button className={"rounded-md "+ props.filter==='Completed'?' border border-gray-400 p-1':''} onClick={()=>props.setCategory('Completed')}>
+        <button className={'rounded-md p-1 ' + (props.filter === 'Completed' ? active : '')} onClick={() => props.setCategory('Completed')}>
           Completed
         </button>
       </div>
@@ -28,3 +30,4 @@ function Categiries(props) {
 }
 
 export default Categiries;
+

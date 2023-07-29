@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TodosContext } from "../context/TodosContext";
 
 function Form(props) {
+  const [toDos,setTodos] =useContext(TodosContext)
+
+  
+  
+  
+
   const [input, setInput] = useState('');
 
   let inputCapture = (e) => {
@@ -12,9 +19,17 @@ function Form(props) {
     if (!input) {
       return;
     }
-    props.addToDo(input)
+    setTodos([
+      ...toDos,
+      {
+        id: toDos.length + 1,
+        title: input,
+        isComplete: false,
+      },
+    ]);
     setInput("");
   };
+  
   return (
     <div className="w-full ">
       <form action="#" onSubmit={onSubmit}>
